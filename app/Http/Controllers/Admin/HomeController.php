@@ -11,6 +11,9 @@ use App\Model\banner_image_detail;
 use App\Model\NewsCategory;
 use App\Model\latest_new;
 use App\Model\TrendingNews;
+use App\Model\contact_us;
+use App\Model\location;
+use App\Model\featurevideo;
 
 use \Carbon\Carbon;
 
@@ -403,43 +406,43 @@ class HomeController extends Controller
     public function updatecategorylist(Request $request){
 
 
-            $this->validate($request, [
-            'news_id' => 'required',
-            'img_title' => 'required',
-            'short_description' => 'required',
-            'long_description' => 'required',
-            // 'image' => 'required',
+        $this->validate($request, [
+        'news_id' => 'required',
+        'img_title' => 'required',
+        'short_description' => 'required',
+        'long_description' => 'required',
+        // 'image' => 'required',
         ]); 
 
-            $latestnews= latest_new::find($request->id);
-            $latestnews->news_id = $request->news_id;
-            $latestnews->img_title = $request->img_title;         
-            $latestnews->short_description = $request->short_description;         
-            $latestnews->long_description = $request->long_description;     
+        $latestnews= latest_new::find($request->id);
+        $latestnews->news_id = $request->news_id;
+        $latestnews->img_title = $request->img_title;         
+        $latestnews->short_description = $request->short_description;         
+        $latestnews->long_description = $request->long_description;     
 
-         if(isset($request['image'])){
+        if(isset($request['image'])){
             if($file = $request->hasFile('image'))
             {
                 $file = $request->file('image');
                 $fileName = $file->getClientOriginalName() ;
 
                 $destinationPath = 'images' ;
-                
+
                 $imagePath = 'images/'.$fileName ;
                 $oldImagePath=public_path($request['image']);
                 @unlink($oldImagePath);
                 $file->move($destinationPath,$fileName);
-             }  
+            }  
         } 
 
-            if($request->hasFile('image'))
-            {
-                $latestnews->img_name = $imagePath;
-            }
+        if($request->hasFile('image'))
+        {
+         $latestnews->img_name = $imagePath;
+        }
 
-            $latestnews->save();   
-            session()->flash('message','Data Inserted Successfully.');
-            return redirect()->back();
+        $latestnews->save();   
+        session()->flash('message','Data Inserted Successfully.');
+        return redirect()->back();
 
            
     }
@@ -447,11 +450,8 @@ class HomeController extends Controller
     public function deletecategoryss (Request $request,$id){
 
         $delete = latest_new::find($id)->delete();
-
         session()->flash('message','Data deleted Successfully.');
         return redirect()->back();
-
-
     }
 
     public function categorystatusss(Request $request,$id,$status){
@@ -519,35 +519,33 @@ class HomeController extends Controller
         public function trendingNewsList(){
 
             return view('Admin.trendingnewslist');
-
         }
 
         public function trendingNewsListyajra(){
 
-             $Trendnews = TrendingNews::get();
+            $Trendnews = TrendingNews::get();
 
             return Datatables::of($Trendnews)
             ->addColumn('serial_no',function($data) {
-                static $i=1;
-                return $i++;
+            static $i=1;
+            return $i++;
             })
             ->addColumn('action',function($data) {
 
-                $btn = '<a href= "'.route('editTrendNews',$data->id).'"  class="edit btn btn-primary btn-sm">Edit</a>';
-                $btn .= '<a href= "'.route('deleteTrendNews',$data->id).'" class="edit btn btn-danger btn-sm">delete</a>';
+            $btn = '<a href= "'.route('editTrendNews',$data->id).'"  class="edit btn btn-primary btn-sm">Edit</a>';
+            $btn .= '<a href= "'.route('deleteTrendNews',$data->id).'" class="edit btn btn-danger btn-sm">delete</a>';
 
-                if ($data->status== "active") {
-                   // $btn .= '<a href= "'.route('categorystatus',$data->id,$data->status).'" class="edit btn btn-success btn-sm">InActive</a>';
+            if ($data->status== "active") {
 
-                    $btn .= '<a href= "'.route('TrendStatus', array($data->id,'inactive')).'" class="edit btn btn-success btn-sm">Inactive</a>';
+             $btn .= '<a href= "'.route('TrendStatus', array($data->id,'inactive')).'" class="edit btn btn-success btn-sm">Inactive</a>';
 
-                }else{
+            }else{
 
-                    $btn .= '<a href= "'.route('TrendStatus',array($data->id,'active')).'" class="edit btn btn-success btn-sm">Active</a>';
-                }
-                
-                return $btn;
-                
+                $btn .= '<a href= "'.route('TrendStatus',array($data->id,'active')).'" class="edit btn btn-success btn-sm">Active</a>';
+            }
+
+            return $btn;
+
             })
             ->rawColumns(['action','serial_no'])
             ->make(true);
@@ -556,11 +554,9 @@ class HomeController extends Controller
 
         public function editTrendNewsform(Request $request,$id){
 
-                $data['Trendnews'] = TrendingNews::where('id',$id)->first();
-                $data['status']= TrendingNews::where('id',$id)->pluck('status','id');
-
-                return view('Admin.editTrendNewsforms')->with($data);
-
+            $data['Trendnews'] = TrendingNews::where('id',$id)->first();
+            $data['status']= TrendingNews::where('id',$id)->pluck('status','id');
+            return view('Admin.editTrendNewsforms')->with($data);
         }
 
         public function trendNewsUpdate(Request $request,$id){
@@ -619,16 +615,141 @@ class HomeController extends Controller
 
              session()->flash('message','status updated Successfully.');
             return redirect()->back();
+        }
 
+        public function storeContact(){
 
+            return view('Admin.contact_us');
+        }
+
+        public function listContact(){
+
+            $listContact = contact_us::get();
+
+            return Datatables::of($listContact)
+            ->addColumn('serial_no',function($data) {
+            static $i=1;
+            return $i++;
+            })
+
+            ->rawColumns(['serial_no'])
+            ->make(true);
+           
         }
 
 
+        public function addFornLocation(){
+
+         $data['editdata'] = location::first();
+         return view('Admin.location')->with($data);
+        }
+
+        public function postFornLocation(Request $request){
+
+            $this->validate($request, [
+                'description' => 'required',
+                'address' => 'required',
+                'email' => 'required',
+                'fax' => 'required',
+                'contact_number' => 'required',
+            ]); 
+        
+            $update= location::find($request->id);
+            $update->description = $request->description;
+            $update->address = $request->address;
+            $update->email = $request->email;
+            $update->fax = $request->fax;
+            $update->contact_number = $request->contact_number;
+            $update->save();
+            return response()->json(['message'=>"Successfully Added"]);
+       }
 
 
+        public function formFeaturedVideos(){
 
+            return view('Admin.formFeaturedVideos');
+        }
 
+        public function storeFeaturedVideos(Request $request){
 
+            $this->validate($request, [
+            'Video_title' => 'required',
+            'Video_link' => 'required',
+            'image' => 'required',
+            ]); 
+            
+
+            if($file = $request->hasFile('image')) {
+            $file = $request->file('image');
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = 'images/background_image';
+            $imagePath = 'images/background_image/'.$fileName ;
+            $file->move($destinationPath,$fileName);
+            }
+
+            $admin = featurevideo::create([
+            'Video_title' => request('Video_title'),
+            'Video_link' => request('Video_link'),
+            'background_image_name' => $fileName ,
+            'background_image_path' => $imagePath ,
+            
+            ]);
+
+            return response()->json(["status" => "success",'message'=>"Thank you For visit!! will call contact you soon"]);
+
+        }
+        public function featuredList(Request $request){
+           return view('Admin.featuredlist');
+        } 
+
+        public function featuredListView(){
+
+            $listContact = featurevideo::get();
+            // dd($listContact);
+           
+
+            return Datatables::of($listContact)
+            ->addColumn('serial_no',function($data) {
+            static $i=1;
+            return $i++;
+            })
+            ->addColumn('action',function($data) {
+
+            $btn = '<a href= "javascript:void(0);" id="'.$data->id.'" class="editpk btn btn-primary btn-sm">Edit</a>';
+            // $btn = '<a href= "'.route('editFeaturedlist',$data->id).'"  class="edit btn btn-primary btn-sm">Edit</a>';
+           /* $btn .= '<a href= "'.route('deleteTrendNews',$data->id).'" class="edit btn btn-danger btn-sm">delete</a>';
+
+            if ($data->status== "active") {
+
+             $btn .= '<a href= "'.route('TrendStatus', array($data->id,'inactive')).'" class="edit btn btn-success btn-sm">Inactive</a>';
+
+            }else{
+
+                $btn .= '<a href= "'.route('TrendStatus',array($data->id,'active')).'" class="edit btn btn-success btn-sm">Active</a>';
+            }*/
+
+            return $btn;
+            })
+
+            ->rawColumns(['serial_no','action'])
+            ->make(true);
+        }
+
+         public function editfeaturedList(Request $request){
+            dd($request->all());
+            $data['editfeaturedData'] = featurevideo::find($id)->first();
+            return view('Admin.editfeaturedlist')->with($data);
+        } 
+
+         /*public function editfeatured(Request $request){
+
+            dd('fwefw');
+
+            $data['editfeaturedData'] = featurevideo::find($id)->first();
+
+            //dd( $data['editfeaturedData']);
+           return view('Admin.editfeaturedlist')->with($data);
+        } */
 
 
 

@@ -29,6 +29,10 @@ Route::get('/front/account', 'front\frontController@accountSection')->name('acco
 Route::post('/user-register', 'front\frontController@frontRegister')->name('front-register');
 Route::post('/user-login', 'front\frontController@frontLogin')->name('front-login');
 Route::get('/user-logout', 'front\frontController@frontLogout')->name('front-logout');
+Route::get('/front/contact', 'front\frontController@contactForm')->name('contact');
+Route::post('/front/post-contact', 'front\frontController@storeContactForm')->name('post_contact');
+Route::post('/front/list-contact', 'front\frontController@storeContact')->name('contactlist');
+
 
 
 
@@ -77,6 +81,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/admin/deletecategoryss/{id}', 'Admin\HomeController@deletecategoryss')->name('deletecategorys');
 	Route::get('/admin/categorystatusss/{id}/{status}', 'Admin\HomeController@categorystatusss')->name('categorystatuss');
 	Route::get('/admin/featuredimages/{id}/{news_id}/{status}', 'Admin\HomeController@featuredimages')->name('featuredimage');
+	Route::get('/admin/featured-videos-form', 'Admin\HomeController@formFeaturedVideos')->name('featuredVideosForm');
+	Route::post('/admin/featured-videos-store', 'Admin\HomeController@storeFeaturedVideos')->name('postFeaturedvideoform');
 
 
 
@@ -99,6 +105,20 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/admin/update-trending-lists/{id}', 'Admin\HomeController@trendNewsUpdate')->name('TrendNewsUpdate');
 	Route::get('/admin/delete-trending-lists/{id}', 'Admin\HomeController@deleteTrendNewss')->name('deleteTrendNews');
 	Route::get('/admin/status-trending-lists/{id}/{status}', 'Admin\HomeController@trendStatuss')->name('TrendStatus');
+
+
+
+	Route::get('/admin/list-contact', 'Admin\HomeController@storeContact')->name('contactlist');
+	Route::get('/admin/show-list-contact', 'Admin\HomeController@listContact')->name('contact-list-tablelist');
+
+
+	Route::get('/admin/Location-form', 'Admin\HomeController@addFornLocation')->name('Location-list-form');
+	Route::post('/admin/post-Location-form', 'Admin\HomeController@postFornLocation')->name('postlocationform');
+	Route::get('/admin/featuredList', 'Admin\HomeController@featuredList')->name('Featured-list');
+	Route::get('/admin/featuredListed', 'Admin\HomeController@featuredListView')->name('Featuredlisted');
+	Route::get('/admin/editfeaturedListed', 'Admin\HomeController@editfeaturedList')->name('editFeaturedlist');
+	Route::post('/admin/editpostfeaturedListed', 'Admin\HomeController@editfeatured')->name('editpostFeaturedvideoform');
+
 
 });
 //Auth::routes();

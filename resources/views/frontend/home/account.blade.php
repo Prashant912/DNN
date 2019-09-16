@@ -32,6 +32,7 @@
     <!-- Inner Page Header serction end here -->
  
    <!-- Blog Page Start Here -->
+    @if (!Auth::check())     
     <div class="account-page-area">
         <div class="container">
             <div class="row">
@@ -44,7 +45,7 @@
                                 <div class="row">
                                     <h3>Login</h3>
                                     
-                                        @if(Session::has('message'))
+                                        @if(Session::has('message-login'))
                                         <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('message') }}</p>
                                         @endif
 
@@ -159,5 +160,6 @@
             </div>
         </div>
     </div>
+    @endif
 
  @endsection   

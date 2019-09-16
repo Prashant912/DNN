@@ -2,7 +2,6 @@
 
 @section('content')
 
-
  <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 padding-0">
@@ -14,6 +13,8 @@
                             <div class="ticker-head up-case backg-colr col-md-2">Breaking News <i class="fa fa-angle-double-right" aria-hidden="true"></i></div>
                             <div class="tickers col-md-10">
                                 <div id="top-news-slider" class="owl-carousel ">
+
+
                                     <div class="item">
                                         <a href="blog-single.html"> <img src="{{asset('assets1/images/breaking/1.jpg')}}" alt="news image"> <span>Migrants Told: Stay in France </span></a>
                                     </div>
@@ -41,7 +42,9 @@
                     </div>  
                     <!-- End News Slider -->              
                 </div>
-            </div>            
+            </div> 
+
+            @if (Auth::check())           
             <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12 padding-0">
                 <div class="slider-area">
                     <div class="bend niceties preview-2">
@@ -80,6 +83,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <!-- Slider Area End Here-->
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 paddimg-left-none">
                 <div class="slider-right">

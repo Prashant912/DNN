@@ -1,5 +1,4 @@
 
-
 <header>
         <div class="header-top-area">
             <div class="container">
@@ -13,14 +12,15 @@
 
                                 @if (Auth::check())
                                 <li><a href="{{route('front-logout')}}">Log-out</a></li>
+
                                 @else
                                 <li><a href="{{route('account')}}">Sign In / Join</a></li>
                                 @endif
-                                @if(Auth::User()->roll_id==1)
-                                <li><a href="contact.html">Contact</a></li>
+                               
+                                <li><a href="{{route('contact')}}">Contact</a></li>
 
                                 <li>India, 27 <sup>o</sup> C</li>
-                                @endif
+                                
                             </ul>
                         </div>
                     </div>

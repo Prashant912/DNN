@@ -12,6 +12,9 @@ use App\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMailable;
 use Auth;
+use App\Model\contact_us;
+use App\Model\location;
+
 
 
 
@@ -104,12 +107,18 @@ class frontController extends Controller
         $email  = $request->get('email');
         $password = $request->get('password');
 
-        $userData = User::select('roll_id')->where('email',$email)->first();
-         if(!empty($userData)){
+        $userData = User::select('name','roll_id')->where('email',$email)->first();
+
+
+
+         if(!empty($userData) &&!empty($userData->name) ){
+
+           
 
             if ($userData->roll_id == 3){
 
                 if(Auth::attempt(['email' => $email, 'password' => $password])){
+                    session()->flash('message','Successfully login');
                     return redirect('/front');
                 } else {
                     session()->flash('message','Credential Wrong');
@@ -131,6 +140,67 @@ class frontController extends Controller
         Auth::logout();
         return redirect('/front/account');
     }
+
+
+    public function contactForm(){
+
+
+        $data['locationdata']=location::first();
+
+        return view('frontend.home.contact')->with($data);
+    }
+
+    /*public function storeContactForm(Request $request){
+
+        //dd($request->all());
+
+        $this->validate($request, [
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => 'required', 'string', 'email', 'max:255',
+            'phone' => 'required',
+            'message' => 'required',
+        ]); 
+
+        $admin = contact_us::create([
+            'fname' => request('fname'),
+            'lname' => request('lname'),
+            'email' => request('email'),
+            'phone' => request('phone'),
+            'message' => request('message'),
+            
+            ]);
+
+         session()->flash('message','Thank you For visit!! will call contact you soon');
+        
+         return redirect('/front/contact');
+        }*/
+
+        public function storeContactForm(Request $request){
+
+           /* dd($request->all());*/
+
+            $this->validate($request, [
+            'fname' => 'required',
+            'lname' => 'required',
+            'email' => 'required', 'string', 'email', 'max:255',
+            'phone' => 'required',
+            'message' => 'required',
+        ]);
+
+            $admin = contact_us::create([
+            'fname' => request('fname'),
+            'lname' => request('lname'),
+            'email' => request('email'),
+            'phone' => request('phone'),
+            'message' => request('message'),
+            
+            ]);
+
+            // session()->flash('message','Thank you For visit!! will call contact you soon');
+            //return redirect('/front/contact');
+            return response()->json(['message'=>"Thank you For visit!! will call contact you soon"]);
+        }
 
 
 

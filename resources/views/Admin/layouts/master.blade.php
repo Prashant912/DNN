@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/> <!--320-->
-   <meta name="csrf-token" content="{{ csrf_token() }}">
+  <meta name="_token" content="{{ csrf_token() }}">
 
   <title>Piluku Admin Template</title>
 
@@ -24,6 +24,9 @@
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
 
+<script type="text/javascript">
+	appurl = "{!!url('/')!!}";
+</script>
 
     
 @yield('extracss')
@@ -100,6 +103,35 @@
 			<ul class="list-unstyled">
 				<li><a href="{{route('Trending-News-Form')}}">Trending-News-Form</a></li>
 				<li><a href="{{route('Trending-News-List')}}">Trending-News-List</a></li>
+						
+			</ul>
+		</li>
+
+
+
+		<li class="submenu">
+			<a class="waves-effect waves-light" href="#">
+				<i class="fa fa-phone"></i>
+				<span class="text">Contact</span>
+				<i class="chevron ti-angle-right"></i>
+			</a>
+			<ul class="list-unstyled">
+				<li><a href="{{route('contactlist')}}">Contact_us Book</a></li>
+				<li><a href="{{route('Location-list-form')}}">Location</a></li>
+						
+			</ul>
+		</li>
+
+
+		<li class="submenu">
+			<a class="waves-effect waves-light" href="#">
+				<i class="fa fa-video"></i>
+				<span class="text">Featured Video</span>
+				<i class="chevron ti-angle-right"></i>
+			</a>
+			<ul class="list-unstyled">
+				<li><a href="{{route('featuredVideosForm')}}">Upload Featured video </a></li>
+				<li><a href="{{route('Featured-list')}}">Featured Video</a></li>
 						
 			</ul>
 		</li>

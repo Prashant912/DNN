@@ -10,6 +10,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets1/images/fav.png') }}">
     <!-- Place favicon.ico in the root directory -->
     <!-- all css here -->
+
     <!-- bootstrap v3.3.6 css -->
     <link rel="stylesheet" href= "{{asset('assets1/css/bootstrap.min.css') }}">
     <!-- font-awesome css -->
@@ -35,6 +36,8 @@
     <link rel="stylesheet" href= "{{asset('assets1/css/responsive.css')}}">
     <!-- modernizr js -->
     <script src="{{asset('assets1/js/modernizr-2.8.3.min.js')}}"></script>
+
+
 
 
 
