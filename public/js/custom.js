@@ -112,12 +112,12 @@ $(document).ready(function(){
         ]
     });
 });
-
+/*
 
 $(document).on("click",".editpk",function(e){
     e.preventDefault();
     var id = $(this).attr("id");
-    alert(id);
+    //alert(id);
     $.ajax({
         url: appurl + '/admin/editfeaturedListed',
         type: 'GET',
@@ -141,51 +141,24 @@ $(document).on("click",".editpk",function(e){
             // $("#errors").hide();
             // console.log(data);
         },
-        cache: false,
-        contentType: false,
-        processData: false
     });
 });
+*/
 
-
-$(document).on("click","#submit_btn",function(e){
-    e.preventDefault();
-    var form = $("#data1");
-    var formData = new FormData(form[0]);
-
-        alert(form);
+$(document).on("click", "#modalPOPId", function () {
+var id = $(this).data('id');
     $.ajax({
-        url: appurl + '/admin/editpostfeaturedListed',
-        type: 'POST',
-        data: formData,
-        error: function(xhr, status, error) {
-            var err = JSON.parse(xhr.responseText)
-            $("#errors").html(xhr.responseText);
-            $("#errors").show();
-            $('#pks').hide();
-            console.log(xhr);
-        },
-
-        success: function (res) {
-            if(res.status == "success") {
-                setTimeout(function() {
-                     location.reload();
-                    /*$('#pks').hide();
-                    $('#name').val('')
-                    $('#name1').val('')
-                    $('#name2').val('')*/
-                },2000)
-                
-            }
-            $('#pks').show().html(res.message);
-            $("#errors").hide();
-            // console.log(data);
-        },
-        cache: false,
-        contentType: false,
-        processData: false
+        url: appurl + '/admin/editfeaturedListed',
+        type: 'GET',
+        data: "id="+id,  
+        success:function(info){
+            $('#constentShow').html(info);
+        }
     });
 });
+
+
+
 
 
 

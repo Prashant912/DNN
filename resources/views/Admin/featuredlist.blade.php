@@ -40,6 +40,14 @@
 				</div>
 			</div>
 </div>
+<div class="modal fade" id="modalPop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static"
+ data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="constentShow"></div>
+        </div>
+    </div>
+</div>
 @endsection
 @push('script')
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>

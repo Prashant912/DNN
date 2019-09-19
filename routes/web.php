@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Route::get('/', 'front\frontController@front')->name('frontend');
 
+Route::resource('chempionleague','GoalscorerController');
+
 
 
 

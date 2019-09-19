@@ -1,76 +1,45 @@
-
-@extends('Admin.layouts.master')
-@section('content')
-
-
-<div class="main-content">
-		<!--theme panel-->
-		<div class="panel">
-			<div class="panel-body">
-				<!--form-heading-->
-				<div class="form-heading">
-					Featured form
-				</div>
-				<!--form-heading-->
-				<!-- <form  action="{{route('addImageDetail')}}"  method="post" class="form form-horizontal" role="form" enctype="multipart/form-data"> -->
-
-
-					<div class="alert alert-success" id="pks" role="alert" style="display :none;"></div>
-					<div class="alert alert-danger" id="errors" role="alert" style="display: none;"></div>
-
-					 {!! Form::model($editfeaturedData,['method' => 'POST','route' => ['editpostFeaturedvideoform'], 'class'=>'form form-horizontal','enctype'=>'multipart/form-data', 'id'=>'data1']) !!}
-
-
-					@csrf
-					<!--Default Horizontal Form-->
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Video Title*:</label>
-						<div class="col-sm-8">
-							{!! Form::text('Video_title', null, array('placeholder' => 'Video Title','class' => 'form-control','id'=>'name')) !!}
-
-						</div>
-					</div>
-
-					{!! Form::hidden('id', $editfeaturedData->id) !!}
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Video Link*</label>
-						<div class="col-sm-8">
-							{!! Form::text('Video_link', null, array('placeholder' => 'Video Link','class' => 'form-control' ,'id'=>'name1')) !!}
-
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label class="col-sm-2 control-label"></label>
-						<div class="col-sm-8">
-						<img src="{{asset($editfeaturedData->background_image_path)}}" class="img-responsive" height="100px" width="100px">
-						</div>
-					</div>
-					
-					<div class="form-group">
-						<label class="col-sm-2 control-label">Back Ground Image</label>
-						<div class="col-sm-8">
-
-							{!! Form::file('image', null, array('placeholder' => 'Back Ground Image','class' => 'form-control' ,'id'=>'name2')) !!}
-							<p>Image size should be min 250* max 500px</p>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-8">
-							<!-- <input type="submit" value="submit" class="btn btn-success"> -->
-							<button type="button" class="btn btn-success" id="submit_btn">Submit</button>
-							<input type="reset" class="btn btn-warning">
-						</div>
-					</div>
-
-				  {!! Form::close() !!}
-			</div>
-		</div>
+{!! Form::model($data,['method' => 'POST','route' => ['editpostFeaturedvideoform'], 'class'=>'form form-horizontal','enctype'=>'multipart/form-data']) !!}
+@csrf
+{!! Form::hidden('id', $data->id) !!}
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" class="ti-close"></span></button>
+	<h4 class="modal-title" id="myModalLabel">Default Modal</h4>
 </div>
-@endsection
+<div class="modal-body">	
+	<!--Default Horizontal Form-->
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Video Title*:</label>
+		<div class="col-sm-8">
+			{!! Form::text('Video_title', null, array('placeholder' => 'Video Title','class' => 'form-control','id'=>'name')) !!}
 
-@push('script')
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-{!! Html::script('js/custom.js') !!}
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Video Link*</label>
+		<div class="col-sm-8">
+			{!! Form::text('Video_link', null, array('placeholder' => 'Video Link','class' => 'form-control' ,'id'=>'name1')) !!}
+
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label"></label>
+		<div class="col-sm-8">
+		<img src="{{asset($data->background_image_path)}}" class="img-responsive" height="100px" width="100px">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Back Ground Image</label>
+		<div class="col-sm-8">
+
+			{!! Form::file('image', null, array('placeholder' => 'Back Ground Image','class' => 'form-control' ,'id'=>'name2')) !!}
+			<p>Image size should be min 250* max 500px</p>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	<button type="submit" class="btn btn-primary">Save changes</button>
+</div>
+{!! Form::close() !!}
+
+

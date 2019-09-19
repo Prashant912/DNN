@@ -715,8 +715,8 @@ class HomeController extends Controller
             })
             ->addColumn('action',function($data) {
 
-            $btn = '<a href= "javascript:void(0);" id="'.$data->id.'" class="editpk btn btn-primary btn-sm">Edit</a>';
-            // $btn = '<a href= "'.route('editFeaturedlist',$data->id).'"  class="edit btn btn-primary btn-sm">Edit</a>';
+            $btn = '<a data-toggle="modal" data-target="#modalPop" id="modalPOPId" data-id="'.$data->id.'" href="javascript:void(0)" class="editpk btn btn-primary btn-sm">Edit</a>';
+             $btn .= '<a href= "'.route('editFeaturedlist',$data->id).'"  class="edit btn btn-danger btn-sm">delete</a>';
            /* $btn .= '<a href= "'.route('deleteTrendNews',$data->id).'" class="edit btn btn-danger btn-sm">delete</a>';
 
             if ($data->status== "active") {
@@ -735,10 +735,10 @@ class HomeController extends Controller
             ->make(true);
         }
 
-         public function editfeaturedList(Request $request){
-            dd($request->all());
-            $data['editfeaturedData'] = featurevideo::find($id)->first();
-            return view('Admin.editfeaturedlist')->with($data);
+        public function editfeaturedList(Request $request){
+            $id = $request->id;
+            $data = featurevideo::find($id);
+            return view('Admin.editfeaturedlist', compact('data'));
         } 
 
          /*public function editfeatured(Request $request){
@@ -750,6 +750,11 @@ class HomeController extends Controller
             //dd( $data['editfeaturedData']);
            return view('Admin.editfeaturedlist')->with($data);
         } */
+
+        public function editfeatured(Request $request)
+        {
+            dd($request->image);
+        }
 
 
 
